@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -50,11 +50,13 @@
                 <p id="hitokoto_text">不论在哪里，我们总会看到有那么一两个句子能穿透你的心</p>
                 <div class="container-fluid">
                     <div class="row">
-                        <a href="https://www.limestart.cn/" target="_blank" class="btn btn-primary col-lg-4">limestart</button>
+                        <!-- 修复1: 闭合标签错误，添加 id 使弹窗生效 -->
+                        <a href="https://www.limestart.cn/" target="_blank" class="btn btn-primary col-lg-4" id="kaygb-limestart">limestart</a>
                         <a href="//aiazt.github.io" id="kaygb-blog-a" target="_blank" class="btn btn-primary col-lg-4">BLOG</a>
                         <a href="https://github.com/" target="_blank" class="btn btn-secondary col-lg-4">GitHub</a>
                         <button id="kaygb-mail" class="btn btn-success col-lg-4">Send a Mail</button>
-                        <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=hi@aiazt.net" target="_blank" id="kaygb-mail-a" class="btn btn-success col-lg-4">Send a Mail</a>
+                        <!-- 修复4: 隐藏重复的邮件链接，避免界面混乱 -->
+                        <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=hi@aiazt.net" target="_blank" id="kaygb-mail-a" class="btn btn-success col-lg-4 d-none">Send a Mail</a>
                         <a href="https://www.cnblogs.com" target="_blank" class="btn btn-secondary col-lg-4">Cnblog</a>
                         <a href="https://www.bilibili.com/" target="_blank" class="btn btn-warning col-lg-4">bilibili</a>
                         <a href="https://www.oschina.net/" target="_blank" class="btn btn-info col-lg-4">OSCHINA</a>
@@ -78,10 +80,8 @@
                         <br>Mod by
                         <a href="https://github.com/aiazt" target="_blank" rel="">Aiazt</a>
                         <a href="https://github.com" target="_blank" rel="nofollow"><img src="https://github.com/favicon.ico" style="width:15px;"></a>
-
                     </p>
-                    </p>
-
+                    <!-- 修复3: 删除多余的 </p> -->
                 </footer>
             </div>
         </div>
@@ -110,7 +110,8 @@
                 closeBtn: 2,
                 isOutAnim: false,
                 area: ['80%', '90%'],
-                content: '//https://www.limestart.cn/'
+                // 修复5: 移除多余的 //
+                content: 'https://www.limestart.cn/'
             });
         });
         $('#kaygb-mail').on('click', function() {
