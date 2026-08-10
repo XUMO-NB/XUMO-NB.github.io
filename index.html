@@ -20,26 +20,82 @@
             /* 卡片左侧图片 */
             background-image: url("https://q2.qlogo.cn/headimg_dl?dst_uin=956833260&spec=5");
         }
+
+        /* ========== 液态玻璃按钮样式 ========== */
+        .btn {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 25px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            padding: 8px 16px;
+            margin: 4px 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            color: #2c3e50;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 不同按钮的色彩区分 */
+        .btn-primary { background: rgba(102, 126, 234, 0.25); border-color: rgba(102, 126, 234, 0.4); color: #2c3e50; }
+        .btn-primary:hover { background: rgba(102, 126, 234, 0.4); }
+        .btn-secondary { background: rgba(80, 80, 80, 0.25); border-color: rgba(120, 120, 120, 0.4); color: #2c3e50; }
+        .btn-secondary:hover { background: rgba(80, 80, 80, 0.4); }
+        .btn-success { background: rgba(17, 153, 142, 0.25); border-color: rgba(17, 153, 142, 0.4); color: #1a7a72; }
+        .btn-success:hover { background: rgba(17, 153, 142, 0.4); }
+        .btn-warning { background: rgba(240, 147, 251, 0.25); border-color: rgba(240, 147, 251, 0.4); color: #6d2e7a; }
+        .btn-warning:hover { background: rgba(240, 147, 251, 0.4); }
+        .btn-info { background: rgba(79, 172, 254, 0.25); border-color: rgba(79, 172, 254, 0.4); color: #1a5276; }
+        .btn-info:hover { background: rgba(79, 172, 254, 0.4); }
+
+        /* 涟漪动画 */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: ripple 0.6s ease-out;
+            pointer-events: none;
+        }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+
+        /* 去除栅格类的强制宽度 */
+        .btn[class*="col-lg"] { flex: 0 0 auto; width: auto; max-width: none; }
+        @media (max-width: 767.98px) { .btn { display: inline-block; width: auto; margin: 4px 4px; } }
     </style>
     <script>
         // 音乐设置
-        let meting_music_api = "https://api.i-meto.com/meting/api";// meting api
-        let music_server = "netease"; // 音乐服务：网易云 netease 参见 meting api支持的服务
-        let music_type = "playlist"; // 歌曲类型：歌单playlist 单首歌曲 song  专辑 album
-        let music_id = "17923061574"; // 歌单ID或歌曲ID或者专辑ID 20173709 29732992
-        let music_order = "random"; // 音频循环顺序, 顺序播放： 'list', 随机播放：'random'
-        let music_mini = false; // mini模式 吸底模式开启后此选项实效 true / false
-        let music_fixed = false; // 吸底模式
-        let music_volume = 0.8; // 默认音量
-        let music_autoplay = true ; // 自动播放
-        let music_loop = "all"; // 音频循环播放, 可选值: 'all', 'one', 'none' ，分别为全部循环，单曲循环，不循环
+        let meting_music_api = "https://api.i-meto.com/meting/api";
+        let music_server = "netease";
+        let music_type = "playlist";
+        let music_id = "17923061574";
+        let music_order = "random";
+        let music_mini = false;
+        let music_fixed = false;
+        let music_volume = 0.8;
+        let music_autoplay = true;
+        let music_loop = "all";
         // 一言设置
-        let hitokoto_api = "https://v1.hitokoto.cn"; // 一言APi
+        let hitokoto_api = "https://v1.hitokoto.cn";
     </script>
 </head>
 
 <body>
- <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@1.0.0-rc.7/dist/autoload.js"></script>
+    <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@1.0.0-rc.7/dist/autoload.js"></script>
     <div id="main" class="container">
         <div class="row my-card justify-content-center">
             <div class="col-lg-4 photo-bg"></div>
@@ -50,114 +106,110 @@
                 <p id="hitokoto_text">不论在哪里，我们总会看到有那么一两个句子能穿透你的心</p>
                 <div class="container-fluid">
                     <div class="row">
-                        <!-- 修复1: 闭合标签错误，添加 id 使弹窗生效 -->
-                        <a href="https://www.limestart.cn/" target="_blank" class="btn btn-primary col-lg-4" id="kaygb-limestart">limestart</a>
-                        <a href="//aiazt.github.io" id="kaygb-blog-a" target="_blank" class="btn btn-primary col-lg-4">BLOG</a>
-                        <a href="https://github.com/" target="_blank" class="btn btn-secondary col-lg-4">GitHub</a>
-                        <button id="kaygb-mail" class="btn btn-success col-lg-4">Send a Mail</button>
-                        <!-- 修复4: 隐藏重复的邮件链接，避免界面混乱 -->
-                        <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=hi@aiazt.net" target="_blank" id="kaygb-mail-a" class="btn btn-success col-lg-4 d-none">Send a Mail</a>
-                        <a href="https://www.cnblogs.com" target="_blank" class="btn btn-secondary col-lg-4">Cnblog</a>
-                        <a href="https://www.bilibili.com/" target="_blank" class="btn btn-warning col-lg-4">bilibili</a>
-                        <a href="https://www.oschina.net/" target="_blank" class="btn btn-info col-lg-4">OSCHINA</a>
+                        <a href="https://www.limestart.cn/" target="_blank" class="btn btn-primary" id="kaygb-limestart">limestart</a>
+                        <a href="//aiazt.github.io" id="kaygb-blog-a" target="_blank" class="btn btn-primary">BLOG</a>
+                        <a href="https://github.com/" target="_blank" class="btn btn-secondary">GitHub</a>
+                        <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=hi@aiazt.net" target="_blank" class="btn btn-success" id="kaygb-mail">Send a Mail</a>
+                        <a href="https://www.cnblogs.com" target="_blank" class="btn btn-secondary">Cnblog</a>
+                        <a href="https://www.bilibili.com/" target="_blank" class="btn btn-warning">bilibili</a>
+                        <a href="https://www.oschina.net/" target="_blank" class="btn btn-info">OSCHINA</a>
                     </div>
                 </div>
-                <!-- <audio muted></audio> -->
                 <div id="aplayer-inner" class="aplayer"></div>
-
-                <!-- <h4 class="mt-4">or, keep your eyes on</h4> -->
                 <ul class="social mt-1">
-                    <!-- <li><a href="https://www.zhihu.com/people/kaygb/"><i class="fab fa-zhihu" aria-hidden="true"></i></a></li> -->
                     <li><a href="https://status.nange.cn/"><i class="fa fa-blog" aria-hidden="true"></i></a></li>
                     <li><a href="https://github.com/kaygb/KZHomePage"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
                     <li><a href="https://github.com/kaygb"><i class="fab fa-github" aria-hidden="true"></i></a></li>
                     <li><a href="https://twitter.com"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>                    
                 </ul>
-                
-                <!-- <div id="aplayer" class="aplayer" data-order="random" data-id="20173709" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" data-volume="0.8"></div> -->
                 <footer>
                     <p>Copyright 2025 - Now <a href="https://aiazt.github.io" target="_blank">Azt's Blog</a> <a href="https://icp.gov.moe/" target="_blank">萌ICP备20211215号</a>
                         <br>Mod by
                         <a href="https://github.com/aiazt" target="_blank" rel="">Aiazt</a>
                         <a href="https://github.com" target="_blank" rel="nofollow"><img src="https://github.com/favicon.ico" style="width:15px;"></a>
                     </p>
-                    <!-- 修复3: 删除多余的 </p> -->
                 </footer>
             </div>
         </div>
-
     </div>
 
-    <!-- aplayer -->
-    <div id="aplayer-fixed"  class="aplayer"></div>
+    <div id="aplayer-fixed" class="aplayer"></div>
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <script src="./static/APlayer-1.10.1/dist/APlayer.min.js"></script>
     <script src="./static/Meting.min.js"></script>
-    <!-- end_aplayer -->
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script defer src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="./static/layer-v3.5.1/layer/layer.js"></script>
-    <!-- <script src="./static/main.js"></script> -->
     <script src="./static/main.js"></script>
+
     <script>
-        //弹出一个页面层
-        $('#kaygb-limestart').on('click', function() {
+        // 弹窗逻辑
+        $('#kaygb-limestart').on('click', function(e) {
+            e.preventDefault();
             layer.open({
-                type: 2,
-                title: 'Blog',
-                shadeClose: true,
-                anim:4,
-                closeBtn: 2,
-                isOutAnim: false,
+                type: 2, title: 'Blog', shadeClose: true, anim: 4,
+                closeBtn: 2, isOutAnim: false,
                 area: ['80%', '90%'],
-                // 修复5: 移除多余的 //
                 content: 'https://www.limestart.cn/'
             });
         });
-        $('#kaygb-mail').on('click', function() {
+        $('#kaygb-mail').on('click', function(e) {
+            e.preventDefault();
+            var mailUrl = $(this).attr('href');
             layer.open({
-                type: 2,
-                title: 'Blog',
-                shadeClose: true,
-                anim:4,
-                closeBtn: 2,
-                isOutAnim: false,
+                type: 2, title: 'Send Mail', shadeClose: true, anim: 4,
+                closeBtn: 2, isOutAnim: false,
                 area: ['80%', '90%'],
-                content: '//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=hi@aiazt.net'
+                content: mailUrl
             });
+        });
+
+        // 涟漪动效
+        $(document).on('click', '.btn', function(e) {
+            e.stopPropagation();
+            var $btn = $(this);
+            $btn.find('.ripple-effect').remove();
+            var offset = $btn.offset();
+            var x = e.pageX - offset.left;
+            var y = e.pageY - offset.top;
+            var $ripple = $('<span class="ripple-effect"></span>');
+            var size = Math.max($btn.outerWidth(), $btn.outerHeight());
+            $ripple.css({
+                width: size, height: size,
+                left: x - size/2, top: y - size/2
+            });
+            $btn.append($ripple);
+            $ripple.on('animationend', function() { $(this).remove(); });
         });
     </script>
 
-<script type="text/javascript"> 
- /* 鼠标文字特效 */
-    var a_idx = 0; 
-    jQuery(document).ready(function($) { 
-        $("body").click(function(e) { 
-            var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善"); 
-            var $i = $("<span/>").text(a[a_idx]); 
-            a_idx = (a_idx + 1) % a.length; 
-            var x = e.pageX, 
-            y = e.pageY; 
-            $i.css({ 
-                "z-index": 999999999999999999999999999999999999999999999999999999999999999999999, 
-                "top": y - 20, 
-                "left": x, 
-                "position": "absolute", 
-                "font-weight": "bold", 
-                "color": "#ff6651" 
-            }); 
-            $("body").append($i); 
-            $i.animate({ 
-                "top": y - 180, 
-                "opacity": 0 
-            }, 
-            1500, 
-            function() { 
-                $i.remove(); 
+    <script type="text/javascript"> 
+        /* 鼠标文字特效 */
+        var a_idx = 0; 
+        jQuery(document).ready(function($) { 
+            $("body").click(function(e) { 
+                var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善"); 
+                var $i = $("<span/>").text(a[a_idx]); 
+                a_idx = (a_idx + 1) % a.length; 
+                var x = e.pageX, 
+                y = e.pageY; 
+                $i.css({ 
+                    "z-index": 999999999999999999999999999999999999999999999999999999999999999999999, 
+                    "top": y - 20, 
+                    "left": x, 
+                    "position": "absolute", 
+                    "font-weight": "bold", 
+                    "color": "#ff6651" 
+                }); 
+                $("body").append($i); 
+                $i.animate({ 
+                    "top": y - 180, 
+                    "opacity": 0 
+                }, 1500, function() { 
+                    $i.remove(); 
+                }); 
             }); 
         }); 
-    }); 
     </script>
-
-
+</body>
 </html>
